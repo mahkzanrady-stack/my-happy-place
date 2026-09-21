@@ -1,0 +1,12 @@
+REVOKE ALL ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.has_role(uuid, public.app_role) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.is_manager_of(uuid, uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.is_manager_of(uuid, uuid) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.handle_new_user() TO service_role;
+GRANT EXECUTE ON FUNCTION public.rls_auto_enable() TO service_role;
+REVOKE ALL ON FUNCTION public.get_minimal_task_context(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.get_resume_message(uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.get_minimal_task_context(uuid) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.get_resume_message(uuid) TO authenticated, service_role;
