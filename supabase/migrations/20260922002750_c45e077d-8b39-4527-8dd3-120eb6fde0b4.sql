@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.log_opening_balance_change() FROM PUBLIC, anon, authenticated;
