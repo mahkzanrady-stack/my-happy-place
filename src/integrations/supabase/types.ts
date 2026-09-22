@@ -52,6 +52,50 @@ export type Database = {
           },
         ]
       }
+      beneficiaries: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          kind: Database["public"]["Enums"]["beneficiary_kind"]
+          name: string
+          notes: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["beneficiary_kind"]
+          name: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["beneficiary_kind"]
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "beneficiaries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       checkpoints: {
         Row: {
           actor: string | null
@@ -575,6 +619,213 @@ export type Database = {
             columns: ["reopened_from_task_id"]
             isOneToOne: false
             referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      goods_transactions: {
+        Row: {
+          amount: number
+          beneficiary_id: string | null
+          context: Database["public"]["Enums"]["tx_context"]
+          created_at: string
+          deleted_at: string | null
+          direction: Database["public"]["Enums"]["tx_direction"]
+          id: string
+          notes: string | null
+          occurred_at: string
+          paid_amount: number
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          type_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          beneficiary_id?: string | null
+          context?: Database["public"]["Enums"]["tx_context"]
+          created_at?: string
+          deleted_at?: string | null
+          direction: Database["public"]["Enums"]["tx_direction"]
+          id?: string
+          notes?: string | null
+          occurred_at?: string
+          paid_amount?: number
+          payment_type?: Database["public"]["Enums"]["payment_type"]
+          type_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          beneficiary_id?: string | null
+          context?: Database["public"]["Enums"]["tx_context"]
+          created_at?: string
+          deleted_at?: string | null
+          direction?: Database["public"]["Enums"]["tx_direction"]
+          id?: string
+          notes?: string | null
+          occurred_at?: string
+          paid_amount?: number
+          payment_type?: Database["public"]["Enums"]["payment_type"]
+          type_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goods_transactions_beneficiary_id_fkey"
+            columns: ["beneficiary_id"]
+            isOneToOne: false
+            referencedRelation: "beneficiaries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "goods_transactions_type_id_fkey"
+            columns: ["type_id"]
+            isOneToOne: false
+            referencedRelation: "movement_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "goods_transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      money_transactions: {
+        Row: {
+          amount: number
+          beneficiary_id: string | null
+          context: Database["public"]["Enums"]["tx_context"]
+          created_at: string
+          deleted_at: string | null
+          direction: Database["public"]["Enums"]["tx_direction"]
+          id: string
+          notes: string | null
+          occurred_at: string
+          type_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          beneficiary_id?: string | null
+          context?: Database["public"]["Enums"]["tx_context"]
+          created_at?: string
+          deleted_at?: string | null
+          direction: Database["public"]["Enums"]["tx_direction"]
+          id?: string
+          notes?: string | null
+          occurred_at?: string
+          type_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          beneficiary_id?: string | null
+          context?: Database["public"]["Enums"]["tx_context"]
+          created_at?: string
+          deleted_at?: string | null
+          direction?: Database["public"]["Enums"]["tx_direction"]
+          id?: string
+          notes?: string | null
+          occurred_at?: string
+          type_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "money_transactions_beneficiary_id_fkey"
+            columns: ["beneficiary_id"]
+            isOneToOne: false
+            referencedRelation: "beneficiaries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "money_transactions_type_id_fkey"
+            columns: ["type_id"]
+            isOneToOne: false
+            referencedRelation: "movement_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "money_transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      movement_types: {
+        Row: {
+          created_at: string
+          domain: Database["public"]["Enums"]["movement_domain"]
+          id: string
+          is_active: boolean
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          domain: Database["public"]["Enums"]["movement_domain"]
+          id?: string
+          is_active?: boolean
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          domain?: Database["public"]["Enums"]["movement_domain"]
+          id?: string
+          is_active?: boolean
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movement_types_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      opening_balance_history: {
+        Row: {
+          changed_at: string
+          id: string
+          new_value: number
+          old_value: number
+          user_id: string
+        }
+        Insert: {
+          changed_at?: string
+          id?: string
+          new_value: number
+          old_value: number
+          user_id: string
+        }
+        Update: {
+          changed_at?: string
+          id?: string
+          new_value?: number
+          old_value?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opening_balance_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1385,6 +1636,35 @@ export type Database = {
         }
         Relationships: []
       }
+      user_settings: {
+        Row: {
+          created_at: string
+          opening_balance: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          opening_balance?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          opening_balance?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1416,9 +1696,17 @@ export type Database = {
         | "component"
         | "other"
         | "integration"
+      beneficiary_kind:
+        | "supplier"
+        | "shipping_company"
+        | "shipping_agent"
+        | "employee"
+        | "other"
       conflict_status: "open" | "investigating" | "resolved" | "dismissed"
       decision_status: "active" | "superseded" | "reverted"
       execution_session_status: "running" | "paused" | "completed" | "aborted"
+      movement_domain: "goods" | "money"
+      payment_type: "cash" | "credit" | "partial"
       resume_reason:
         | "NEW_TASK"
         | "OPEN_TASK"
@@ -1443,6 +1731,8 @@ export type Database = {
         | "soft_deleted"
         | "blocked"
         | "verify"
+      tx_context: "personal" | "business"
+      tx_direction: "in" | "out"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1586,9 +1876,18 @@ export const Constants = {
         "other",
         "integration",
       ],
+      beneficiary_kind: [
+        "supplier",
+        "shipping_company",
+        "shipping_agent",
+        "employee",
+        "other",
+      ],
       conflict_status: ["open", "investigating", "resolved", "dismissed"],
       decision_status: ["active", "superseded", "reverted"],
       execution_session_status: ["running", "paused", "completed", "aborted"],
+      movement_domain: ["goods", "money"],
+      payment_type: ["cash", "credit", "partial"],
       resume_reason: [
         "NEW_TASK",
         "OPEN_TASK",
@@ -1616,6 +1915,8 @@ export const Constants = {
         "blocked",
         "verify",
       ],
+      tx_context: ["personal", "business"],
+      tx_direction: ["in", "out"],
     },
   },
 } as const
